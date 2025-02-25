@@ -13,13 +13,19 @@ typedef struct {
 
 
 /**
- * @brief Performes parallel merge sort on the int array using 
+ * @brief Performes sort (prepares data & calls pmerge_sort) on the int array  
  *
  * @param arr - incomming array (pointer to it's first element)
  */
 void sort(int *arr, size_t n);
 
-void *pmerge_sort(void *params);
+/**
+ * @brief Performes parallel merge sort 
+ *
+ * @param args - struct th_params, contains ptr to arr, left & right bounds
+ * @return returns NULL (pthread.h requirements)
+ */
+void *pmerge_sort(void *args);
 
 /**
  * @brief Performes simple merge sort on array len <= MIN_SIZE

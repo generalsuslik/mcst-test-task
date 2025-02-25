@@ -19,12 +19,12 @@ void sort(int *arr, size_t n)
 	free(params);
 }
 
-void *pmerge_sort(void *params)
+void *pmerge_sort(void *args)
 {
-	th_params* th_args = (th_params *) params;
-	int *arr     = th_args->arr;
-	size_t left  = th_args->left;
-	size_t right = th_args->right;
+	th_params* params = (th_params *) args;
+	int *arr     = params->arr;
+	size_t left  = params->left;
+	size_t right = params->right;
 
 	if (left >= right) {
 		return NULL;
@@ -33,6 +33,8 @@ void *pmerge_sort(void *params)
 	// if arr's len is <= MIN_SIZE we ain't gonna parallel the sorting task
 	if (right - left + 1 <= MIN_SIZE) {
 		merge_sort(arr, left, right);
+		free(params);
+		return NULL;
 	}
 
 	size_t mid = left + (right - left) / 2;
@@ -51,22 +53,22 @@ void *pmerge_sort(void *params)
 	pthread_t tid_right;
 	
 	int err = 0;
-	err = pthread_create(&tid_left, NULL, pmerge_sort, (void *)left_params);
+	err = pthread_create(&tid_left, NULL, pmerge_sort, left_params);
 	if (err != 0) {
 		perror("[pmerge_sort] Error creating the left thread");
 		exit(EXIT_FAILURE);
 	}
 
-	err = pthread_create(&tid_right, NULL, pmerge_sort, (void *)right_params);
+	err = pthread_create(&tid_right, NULL, pmerge_sort, right_params);
 	if (err != 0) {
 		perror("[pmerge_sort] Error creating the right thread");
 		exit(EXIT_FAILURE);
 	}
 
-	merge(arr, left, mid, right);
-
 	pthread_join(tid_left, NULL);
 	pthread_join(tid_right, NULL);
+
+	merge(arr, left, mid, right);
 
 	return NULL;
 }

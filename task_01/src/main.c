@@ -1,15 +1,24 @@
 #include "sort.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
 
-int main()
+int main(const int argc, char *argv[])
 {
-	int arr[] = { 2, 9, 1, 0, 5, -1, 55, 12, 666, 8, -123, 52, 52, 121 };
-	size_t n = sizeof(arr) / sizeof(int);
+	ssize_t n = 100;
+	if (argc == 2) {
+		n = atol(argv[1]);
+	}
 
+	int arr[n];
+	for (ssize_t i = n - 1; i >= 0; --i) {
+		arr[i] = i;
+	}
+	
 	sort(arr, n);
 
-	for (size_t i = 0; i < n; ++i) {
+	for (ssize_t i = 0; i < n; ++i) {
 		printf("%d ", arr[i]);
 	}
 	printf("\n");
