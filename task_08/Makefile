@@ -24,7 +24,6 @@ build: $(SOURCE)
 	$(CC) $(CC_FLAGS) $(LIBS) $(SOURCES) -o $(BIN_DIR)/$(TARGET)
 
 run:
-	@echo "Running ./bin/main with flag: -f $(FUNC)"
 	./$(BIN_DIR)/$(TARGET) -f $(FUNC)
 
 clean:
