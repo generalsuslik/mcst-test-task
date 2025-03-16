@@ -1,13 +1,13 @@
 #include "process.hpp"
 
-#include <iomanip>
+#include <cstdint>
 #include <iostream>
 #include <vector>
 
 #include <fcntl.h>
 #include <unistd.h>
 
-void process_file(const char* file_name)
+std::uint32_t process_file(const char* file_name)
 {
 	const int fd = open(file_name, O_RDONLY);
 	if (fd == -1) 
@@ -37,7 +37,7 @@ void process_file(const char* file_name)
 
 	close(fd);
 
-	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << res_hash << std::endl;
+	return res_hash;
 }
 
 

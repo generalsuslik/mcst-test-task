@@ -1,5 +1,6 @@
 #include "process_file.hpp"
 
+#include <iomanip>
 #include <iostream>
 
 int main(int argc, char* argv[])
@@ -11,9 +12,10 @@ int main(int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	const char* file_name = argv[1];
-	process_file(file_name);
+	std::uint32_t res_hash = process_file(argv[1]);
 
+	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << res_hash << std::endl;
+	
 	return 0;
 }
 
