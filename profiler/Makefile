@@ -21,15 +21,15 @@ LIBS     = $(INC_DIRS)
 all: clean build_single build_fork build_etalone
 
 build_single: $(SOURCE)
-	@echo "Building a one-process target"
+	@echo "Building one-process target"
 	$(CXX) $(CXX_FLAGS) $(LIBS) main.cpp $(SOURCES) -o $(BIN_DIR)/$(TARGET_SINGLE)
 
 build_fork: $(SOURCE)
-	@echo "Building a multiprocessing target"
+	@echo "Building multiprocessing target"
 	$(CXX) $(CXX_FLAGS) $(LIBS) main_fork.cpp $(SOURCES) -o $(BIN_DIR)/$(TARGET_FORK)
 
 build_etalone: $(SOURCE)
-	@echo "Building a etalone target"
+	@echo "Building etalone target"
 	$(CXX) $(CXX_FLAGS) $(LIBS) etalone.cpp src/process.cpp -o $(BIN_DIR)/$(TARGET_ETALONE)
 
 run_single:
