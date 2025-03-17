@@ -12,9 +12,7 @@ int main(int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	std::uint32_t res_hash = process_file(argv[1]);
-
-	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << res_hash << std::endl;
+	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << process_file(argv[1]) << std::endl;
 	
 	return 0;
 }

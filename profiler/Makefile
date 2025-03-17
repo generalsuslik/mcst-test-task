@@ -1,8 +1,9 @@
 CXX = clang++
 CXX_FLAGS = -g -std=c++20 -Wall -Werror -Wpedantic
 
-TARGET_SINGLE = main
-TARGET_FORK   = main_fork
+TARGET_SINGLE  = main
+TARGET_FORK    = main_fork
+TARGET_ETALONE = etalone
 
 SRC_DIR = src
 BIN_DIR = bin
@@ -15,9 +16,9 @@ INC_DIRS = -Iinc
 LIBS     = $(INC_DIRS)
 
 .PHONY:
-	clean build_single build_fork
+	clean build_single build_fork build_etalone
 
-all: clean build_single build_fork
+all: clean build_single build_fork build_etalone
 
 build_single: $(SOURCE)
 	@echo "Building a one-process target"
@@ -27,11 +28,18 @@ build_fork: $(SOURCE)
 	@echo "Building a multiprocessing target"
 	$(CXX) $(CXX_FLAGS) $(LIBS) main_fork.cpp $(SOURCES) -o $(BIN_DIR)/$(TARGET_FORK)
 
+build_etalone: $(SOURCE)
+	@echo "Building a etalone target"
+	$(CXX) $(CXX_FLAGS) $(LIBS) etalone.cpp src/process.cpp -o $(BIN_DIR)/$(TARGET_ETALONE)
+
 run_single:
 	./$(BIN_DIR)/$(TARGET_SINGLE)
 
 run_fork:
 	./$(BIN_DIR)/$(TARGET_FORK)
+
+run_etalone:
+	./$(BIN_DIR)/$(TARGET_ETALONE)
 
 clean:
 	$(MKDIR_P) $(BIN_DIR)

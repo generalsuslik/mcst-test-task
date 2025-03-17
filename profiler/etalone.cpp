@@ -1,7 +1,9 @@
 #include "process.hpp"
 
+#include <cstdint>
 #include <iomanip>
 #include <iostream>
+#include <vector>
 
 std::uint32_t process_file(const char* file_name)
 {
@@ -39,10 +41,8 @@ int main(int argc, char* argv[])
 					<< "It should be: " << argv[0] << " <file_name>" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	
-	std::uint32_t res_hash = process_file(argv[1]);
-	
-	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << res_hash << std::endl;
+
+	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << process_file(argv[1]) << std::endl;
 
 	return 0;
 }
