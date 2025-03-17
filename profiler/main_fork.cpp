@@ -48,8 +48,10 @@ int main(int argc, char* argv[])
 			munmap(hash, nfiles * sizeof(std::uint32_t));
 			_exit(0);
 		}
-		
-		pids[i - 1] = pid;
+		else 
+		{
+			pids[i - 1] = pid;
+		}
 	}
 
 	for (int i = 0; i < nfiles; ++i) 
