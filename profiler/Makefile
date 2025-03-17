@@ -1,4 +1,4 @@
-CXX = clang
+CXX = clang++
 CXX_FLAGS = -g -std=c++20 -Wall -Werror -Wpedantic
 
 TARGET_SINGLE = main
@@ -12,12 +12,12 @@ SOURCES = $(SRC_DIR)/*.cpp
 DEL_FILE = rm -f
 MKDIR_P  = mkdir -p
 INC_DIRS = -Iinc
-LIBS     = $(INC_DIRS) -lstdc++
+LIBS     = $(INC_DIRS)
 
 .PHONY:
-	clean build_single
+	clean build_single build_fork
 
-all: clean build_single
+all: clean build_single build_fork
 
 build_single: $(SOURCE)
 	@echo "Building a one-process target"

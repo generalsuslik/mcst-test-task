@@ -8,14 +8,11 @@ def generate_file(name: str, size: int) -> None:
     print(f"Binary file '{name}' of size {size} bytes created successfully.")
 
 
-def main():
+def generate_files(n: int) -> None:
     files_dir = "files"
     os.makedirs(files_dir, exist_ok=True)
 
-    for i in range(10, 20):
-        generate_file("files/" + str(i) + ".bin", 3 ** i)
-
-
-if __name__ == '__main__':
-    main()
+    start_pow = 8
+    for i in range(start_pow, n + start_pow):
+        generate_file("files/" + str(i - start_pow + 1) + ".bin", 2 ** i - 20)
 

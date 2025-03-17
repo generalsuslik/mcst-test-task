@@ -25,11 +25,6 @@ std::uint32_t process_file(const char* file_name)
 	ssize_t bytes_read;
 	while ((bytes_read = read(fd, buf.data(), buf.size())) > 0)
 	{
-		if (bytes_read < buf_size) 
-		{
-			buf.resize(bytes_read);
-		}
-
 		res_hash = data_processor.process_block(buf);
 		buf.clear();
 		buf.resize(buf_size);

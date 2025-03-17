@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 	if (argc < 2) 
 	{
 		std::cerr << "Invalid programm arguments. "
-					<< "It should be: ./<app_name> <file_name>" << std::endl;
+					<< "It should be: " << argv[0] << " <file_name>" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
