@@ -31,6 +31,8 @@ std::uint32_t process_file(const char* file_name)
 
 	std::uint32_t res_hash = 0;
 	ssize_t bytes_read;
+
+	// reading by blocks of sizeof(std::uint32_t) * buf.size() = 4 * 0x100000 bytes
 	while ((bytes_read = read(fd, buf.data(), sizeof(std::uint32_t) * buf.size())) > 0)
 	{
 		// do not process bytes, that cannot form std::uin32_t
@@ -45,19 +47,15 @@ std::uint32_t process_file(const char* file_name)
 
 		// resize buffer
 		// if we read less then buffer size
-		bool is_resized = false;
 		if (uint_read < buf_size) 
 		{
 			buf.resize(uint_read);
-			is_resized = true;
 		}
 
 		// compute hash and clear the buffer for new block
 		res_hash = data_processor.process_block(buf);
-		if (is_resized)
-		{
-			buf.resize(buf_size);
-		}
+		buf.clear();
+		buf.resize(buf_size);
 		std::ranges::fill(buf, 0);
 	}
 

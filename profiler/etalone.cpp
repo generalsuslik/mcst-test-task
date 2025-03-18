@@ -39,19 +39,15 @@ std::uint32_t etalone_process_file(const char* file_name)
 
 		// resize buffer
 		// if we read less then buffer size
-		bool is_resized = false;
 		if (bytes_read < buf_size) 
 		{
 			buf.resize(bytes_read);
-			is_resized = true;
 		}
 
 		// compute hash and clear the buffer for new block
 		res_hash = data_processor.process_block(buf);
-		if (is_resized)
-		{
-			buf.resize(buf_size);
-		}
+		buf.clear();
+		buf.resize(buf_size);
 		std::ranges::fill(buf, 0);
 	}
 
