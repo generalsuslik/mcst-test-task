@@ -38,7 +38,7 @@ std::uint32_t process_file(const char* file_name)
 		// do not process bytes, that cannot form std::uin32_t
 		if (bytes_read < sizeof(std::uint32_t)) 
 		{
-			break;
+			continue;
 		}
 
 		// length of readen data = amount of read uints =
