@@ -5,6 +5,13 @@
 #include <iostream>
 #include <vector>
 
+/**
+ * @brief reads file by blocks of size 0x100000 and computes file has
+ *
+ * @param file_name - path to file
+ *
+ * @return - hash of this file
+ */
 std::uint32_t process_file(const char* file_name)
 {
 	FILE* fptr = fopen(file_name, "r+b");
@@ -23,6 +30,19 @@ std::uint32_t process_file(const char* file_name)
 	std::size_t bytes_read;
 	while ((bytes_read = fread(buf.data(), 1, buf.size(), fptr)) > 0)
 	{
+		// do not process bytes, that cannot form std::uin32_t
+		if (bytes_read < sizeof(std::uint32_t))
+		{
+			break;
+		}
+
+		// if we read less then buffer size
+		if (bytes_read < buf_size)
+		{
+			buf.resize(bytes_read);
+		}
+
+		// compute hash and clear the buffer for new block
 		res_hash = data_processor.process_block(buf);
 		buf.clear();
 		buf.resize(buf_size);
