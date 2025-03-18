@@ -13,7 +13,7 @@
  *
  * @return - hash of this file
  */
-std::uint32_t process_file(const char* file_name)
+std::uint32_t etalone_process_file(const char* file_name)
 {
 	FILE* fptr = fopen(file_name, "r+b");
 	if (fptr == nullptr) 
@@ -29,7 +29,7 @@ std::uint32_t process_file(const char* file_name)
 	
 	std::uint32_t res_hash = 0;
 	std::size_t bytes_read;
-	while ((bytes_read = fread(buf.data(), 1, buf.size(), fptr)) > 0)
+	while ((bytes_read = fread(buf.data(), sizeof(std::uint32_t), buf.size(), fptr)) > 0)
 	{
 		// do not process bytes, that cannot form std::uin32_t
 		if (bytes_read < sizeof(std::uint32_t)) 
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << process_file(argv[1]) << std::endl;
+	std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << etalone_process_file(argv[1]) << std::endl;
 
 	return 0;
 }

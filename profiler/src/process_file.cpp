@@ -31,7 +31,7 @@ std::uint32_t process_file(const char* file_name)
 
 	std::uint32_t res_hash = 0;
 	ssize_t bytes_read;
-	while ((bytes_read = read(fd, buf.data(), buf.size())) > 0)
+	while ((bytes_read = read(fd, buf.data(), sizeof(std::uint32_t) * buf.size())) > 0)
 	{
 		// do not process bytes, that cannot form std::uin32_t
 		if (bytes_read < sizeof(std::uint32_t)) 
@@ -39,12 +39,16 @@ std::uint32_t process_file(const char* file_name)
 			break;
 		}
 
+		// length of readen data = amount of read uints =
+		// bytes_read / sizeof(std::uint32_t) = bytes_read / 4
+		std::size_t uint_read = bytes_read / 4; 
+
 		// resize buffer
 		// if we read less then buffer size
 		bool is_resized = false;
-		if (bytes_read < buf_size) 
+		if (uint_read < buf_size) 
 		{
-			buf.resize(bytes_read);
+			buf.resize(uint_read);
 			is_resized = true;
 		}
 
