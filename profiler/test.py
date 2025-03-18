@@ -3,23 +3,16 @@ import subprocess
 from generator import generate_files
 
 
-def compile_main():
+def compile():
     subprocess.run(["make"], check=True)
 
-
-def compile_etalone():
-    etalone = "etalone.cpp"
-    process = "src/process.cpp"
-    binary  = "bin/etalone"
-    subprocess.run(["clang++", "-Iinc", etalone, process, "-o", binary], check=True)
 
 def main() -> None:
     n = 10
     print(f"Generating {n} files:")
     generate_files(n)
 
-    compile_main()
-    compile_etalone()
+    compile()
 
     for i in range(n):
         file_path = f"files/{10 + i}.bin"

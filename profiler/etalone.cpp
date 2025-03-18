@@ -1,5 +1,6 @@
 #include "process.hpp"
 
+#include <algorithm>
 #include <cstdint>
 #include <iomanip>
 #include <iostream>
@@ -31,21 +32,27 @@ std::uint32_t process_file(const char* file_name)
 	while ((bytes_read = fread(buf.data(), 1, buf.size(), fptr)) > 0)
 	{
 		// do not process bytes, that cannot form std::uin32_t
-		if (bytes_read < sizeof(std::uint32_t))
+		if (bytes_read < sizeof(std::uint32_t)) 
 		{
 			break;
 		}
 
+		// resize buffer
 		// if we read less then buffer size
-		if (bytes_read < buf_size)
+		bool is_resized = false;
+		if (bytes_read < buf_size) 
 		{
 			buf.resize(bytes_read);
+			is_resized = true;
 		}
 
 		// compute hash and clear the buffer for new block
 		res_hash = data_processor.process_block(buf);
-		buf.clear();
-		buf.resize(buf_size);
+		if (is_resized)
+		{
+			buf.resize(buf_size);
+		}
+		std::ranges::fill(buf, 0);
 	}
 
 	fclose(fptr);
